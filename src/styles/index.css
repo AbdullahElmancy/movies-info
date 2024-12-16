@@ -4,11 +4,11 @@
 }
 @font-face {
   font-family: forPragraph;
-  src: url("./Fonts/LibreBaskerville-Regular.ttf");
+  src: url("../assets/Fonts/LibreBaskerville-Regular.ttf");
 }
 @font-face {
   font-family: forHeadline;
-  src: url("./Fonts/LibreBaskerville-Regular.ttf");
+  src: url("../assets/Fonts/Cinzel-Regular.ttf");
 }
 *{
   margin: 0;
