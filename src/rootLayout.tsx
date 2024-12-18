@@ -1,14 +1,13 @@
 import React from 'react'
 import Nav from './components/nav/nav';
 import Footer from './components/footer/footer';
+import { Outlet } from 'react-router-dom';
 
-function RootLayout({children}:{
-    children:React.ReactNode
-}) {
+function RootLayout() {
   return (
     <div>
         <Nav/>
-        {children}
+        <Outlet />
         <Footer/>
     </div>
   )

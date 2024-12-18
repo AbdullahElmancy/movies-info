@@ -1,9 +1,10 @@
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
 
 function Home() {
   return (
 <>
-<h1>hello world from fancosh</h1>
-<div>hello world</div>
+<div>hello</div>
 </>
   )
 }
