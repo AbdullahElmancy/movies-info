@@ -1,13 +1,14 @@
-import React from 'react'
 import Nav from './components/nav/nav';
 import Footer from './components/footer/footer';
 import { Outlet } from 'react-router-dom';
 
 function RootLayout() {
   return (
-    <div>
+    <div >
         <Nav/>
+        <div className="container">
         <Outlet />
+        </div>
         <Footer/>
     </div>
   )

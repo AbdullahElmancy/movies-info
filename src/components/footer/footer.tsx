@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom"
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <footer className={`p-3 mt-3`}> 
+    <p className="text-center">Create by Abdallah Elmancy</p>
+    </footer>
   )
 }
 

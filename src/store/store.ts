@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
 import moveReducer from './movieSlice'
+import tokenReducer from './tokenSlice'
 export const store = configureStore({
     reducer:{
         moveReducer,
+        tokenReducer
     }
 })
 

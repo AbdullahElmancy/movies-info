@@ -5,7 +5,7 @@ import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-i
 
 function Nav() {
   return (
-    <nav>
+    <nav className='mb-3'>
       <div className={`${style.container} d-flex align-items-center d-flex justify-content-between p-3`}>
         <div className={style.links}>
           <Link className={`${style.link} px-2`} to={"/home"}>Home</Link>

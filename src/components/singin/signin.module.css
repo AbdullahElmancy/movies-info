@@ -1,0 +1,28 @@
+.formContainer{
+    border: none;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    background-color:rgba(6, 125, 172, 0.2);
+}
+
+.btnForm{
+    background-color:rgba(15, 180, 187, 1);
+    color: var(--textColor);
+}
+
+.btnForm:hover{
+    background-color:rgba(15, 181, 187, 0.448);
+    color: var(--textColor);
+}
+
+.errorV{
+    color: rgba(15, 180, 187, 1);
+    margin-top: .5rem;
+}
+.register{
+    color: rgba(15, 180, 187, 1);
+    margin-top: .5rem;
+}
