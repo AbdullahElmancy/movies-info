@@ -1,50 +1,81 @@
-# React + TypeScript + Vite
+# Movie Info
+This project have all movie and tv show can make profile to it and see the new movie info
+to decide what you want watch 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br>
 
-Currently, two official plugins are available:
+# Project structure
+* *[main](#-1-main)
+* *[pages](#-2-pages)
+* *[components](#-3-components)
+* *[assets](#-4-assets)
+* *[store](#-5-store)
+* *[styles](#-6-styles)
+* *[public](#-7-public)
+<br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# # 1. main
+## index.html
+Here we wite meta data like description of project and key words... <br> and also div id root that core in this react 
+and script connect with main.tsx
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/elmancylogo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="movie review app">
+    <meta name="keywords" content="movie, review, tv, show, series, film, cinema, rating">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="author" content="Elmancy"> 
+    <title>Movie Review</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
 ```
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# # 2. pages
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+# # 3. components
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# # 4. assets
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
+
+# # 5. store
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
+
+# # 6. styles
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
+
+# # 7.public
+<div align="right">
+    <b><a href="#Project-structure">↥ back to top</a></b>
+</div>
+<br>
+
