@@ -6,7 +6,7 @@ export const showsApi = createApi({
     endpoints: (builder)=>{
       return{
         getMovie: builder.query({
-            query: (query) => `${query}?api_key=${import.meta.env.VITE_APIKEY}`,
+            query: (query) => `${query}?api_key=${process.env.APIKEY}`,
           }),
       }
       
