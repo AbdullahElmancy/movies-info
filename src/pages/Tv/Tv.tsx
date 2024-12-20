@@ -1,7 +1,10 @@
+import PopulerTV from "../../components/PopulerTv/PopulerTV"
 
 function Tv() {
   return (
-    <div>Tv</div>
+    <section>
+      <PopulerTV/>
+    </section>
   )
 }
 

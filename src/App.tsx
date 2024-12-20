@@ -8,6 +8,7 @@ import Movies from './pages/Movies/Movies'
 import Notfound from './pages/Notfound/Notfound'
 import PrivateAuthsRoute from './components/PrivateRoute/PrivateAuthRoute'
 import PrivatePagesRoute from './components/PrivateRoute/PrivatePagesRoute'
+import Single from './pages/Single/Single'
 const router =createBrowserRouter([
   {
     element:<RootLayout/>,
@@ -17,13 +18,13 @@ const router =createBrowserRouter([
         {path:"/home",element:<Home/>},
         {path:"/tv",element:<Tv/>},
         {path:"/movies",element:<Movies/>},
+        {path:"/single/:type/:id",element:<Single/>},
       ]},
       {element:<PrivateAuthsRoute/>,children:[
         {path:"/signup",element:<SignUp/>},
         {path:"/login",element:<Login/>},
       ]},
       {path:"*",element:<Notfound/>},
-
     ]
   }
  

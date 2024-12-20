@@ -117,6 +117,8 @@ import Movies from './pages/Movies/Movies'
 import Notfound from './pages/Notfound/Notfound'
 import PrivateAuthsRoute from './components/PrivateRoute/PrivateAuthRoute'
 import PrivatePagesRoute from './components/PrivateRoute/PrivatePagesRoute'
+import Single from './pages/Single/Single'
+
 const router =createBrowserRouter([
   {
     element:<RootLayout/>,
@@ -126,6 +128,7 @@ const router =createBrowserRouter([
         {path:"/home",element:<Home/>},
         {path:"/tv",element:<Tv/>},
         {path:"/movies",element:<Movies/>},
+        {path:"/single/:type/:id",element:<Single/>},
       ]},
       {element:<PrivateAuthsRoute/>,children:[
         {path:"/signup",element:<SignUp/>},
@@ -160,6 +163,68 @@ export default App
 # # 2. pages
 <details open>
 <summary>Home</summary>
+import two components
+
+1. TrendingMovie
+2. TrendingTV
+
+```tsx
+import TrendingMovie from "../../components/TrendingMovie/TrendingMovie"
+import TrendingTV from "../../components/TrendingTv/TrendingTv"
+
+function Home() {
+
+  return (
+<>
+<section>
+  <TrendingMovie/>
+  <hr/>
+  <TrendingTV/>
+</section>
+</>
+  )
+}
+
+export default Home
+```
+</details>
+<br>
+<details>
+<summary>Movies</summary>
+import components PopulerMovie
+
+```tsx
+import PopulerMovie from "../../components/PopulerMovie/PopulerMovie"
+
+function Movies() {
+  return (
+    <section>
+      <PopulerMovie/>
+    </section>
+  )
+}
+
+export default Movies
+```
+</details>
+<br>
+<details>
+<summary>Tv</summary>
+import components PopulerTV
+
+```tsx
+import PopulerTV from "../../components/PopulerTv/PopulerTV"
+
+function Tv() {
+  return (
+    <section>
+      <PopulerTV/>
+    </section>
+  )
+}
+
+export default Tv
+```
 </details>
 <br>
 <details>
@@ -703,6 +768,282 @@ export default PrivateAuthsRoute
 ```
 </details>
 <br>
+<details>
+<summary>PopulerMovie</summary>
+first import
+
+1. useNavigate when click image go to single Movie or tv
+2. useGetMovieQuery from redux to pass end point to fitch data
+<br>
+then have prefix imge base url for image
+<br>
+there three condtion
+from useGetMovieQuery<br>
+loading return div<br>
+error return div<br>
+data will map into data.result to make ui
+
+```tsx
+import { useNavigate } from "react-router-dom"
+import { useGetMovieQuery } from "../../store/shows"
+
+function PopulerMovie() {
+    const { data, error, isLoading } = useGetMovieQuery("/movie/popular")
+    const navigate = useNavigate()
+    const prefixImg = "https://image.tmdb.org/t/p/w500/"
+    if (isLoading) return <div>isLoading</div>
+    if (error) return <div>Error</div>
+    if (data) {
+        const movies:[{id:number, title:string, poster_path:string, overview:string}] = data.results
+
+        return (
+            <div>
+                <div className="row">
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="col-md-2">
+                            <img className="w-100 rounded" src={prefixImg + movie.poster_path} alt={movie.title} onClick={()=>navigate(`/single/movie/${movie.id}`)}/>
+                            <h3 className="my-2">{movie.title}</h3>
+                            <p>{`${movie.overview.slice(0,50)}...`}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>)
+    }
+}
+
+export default PopulerMovie
+```
+</details>
+<br>
+<details>
+<summary>PopulerTV</summary>
+first import
+
+1. useNavigate when click image go to single Movie or tv
+2. useGetMovieQuery from redux to pass end point to fitch data
+<br>
+then have prefix imge base url for image
+<br>
+there three condtion
+from useGetMovieQuery<br>
+loading return div<br>
+error return div<br>
+data will map into data.result to make ui
+
+```tsx
+import { useNavigate } from "react-router-dom"
+import { useGetMovieQuery } from "../../store/shows"
+
+function PopulerTV() {
+const { data, error, isLoading } = useGetMovieQuery("/tv/popular")
+    const prefixImg = "https://image.tmdb.org/t/p/w500/"
+    const navigate = useNavigate()
+    if (isLoading) return <div>isLoading</div>
+    if (error) return <div>Error</div>
+    if (data) {
+        const movies:[{id:number, name:string, poster_path:string, overview:string}] = data.results
+
+        return (
+            <div>
+                <div className="row">
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="col-md-2" >
+                            <img className="w-100 rounded" src={prefixImg + movie.poster_path} alt={movie.name} onClick={()=>navigate(`/single/tv/${movie.id}`)} />
+                            <h3 className="my-2">{movie.name}</h3>
+                            <p>{`${movie.overview.slice(0,50)}...`}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>)
+    }
+}
+
+export default PopulerTV
+```
+</details>
+<br>
+<details>
+<summary>PrivteAuth</summary>
+it guard for routing pages
+
+```tsx
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { Navigate, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getToken } from "../../store/tokenSlice";
+import { useEffect } from "react";
+
+function PrivateAuthsRoute() {
+    const dispatch = useDispatch()
+    const islogin = useSelector((state:RootState)=>state.tokenReducer.islogin)
+    useEffect(()=>{
+        dispatch(getToken())
+    },[islogin,dispatch])
+    
+    return islogin == false ? <Outlet /> : <Navigate to={"/"} replace />;
+
+}
+
+export default PrivateAuthsRoute
+```
+</details>
+<br>
+<details>
+<summary>PrivtePge</summary>
+it guard for routing pages
+
+```tsx
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { Navigate, Outlet } from "react-router-dom";
+import { getToken } from "../../store/tokenSlice";
+
+function PrivatePagesRoute() {
+    const dispatch = useDispatch()
+    dispatch(getToken())
+    const islogin = useSelector((state:RootState)=>state.tokenReducer.islogin)
+
+
+    return islogin ? <Outlet /> : <Navigate to={"/login"} replace />;
+}
+
+export default PrivatePagesRoute
+```
+</details>
+<br>
+<details>
+<summary>TerndingMovie</summary>
+
+```tsx
+import { useSelector } from "react-redux"
+import { useGetMovieQuery } from "../../store/shows"
+import { RootState } from "../../store/store"
+import style from './trendingmovie.module.css'
+import { useNavigate } from "react-router-dom"
+function TrendingMovie() {
+    const { data, error, isLoading } = useGetMovieQuery("trending/movie/week")
+    const navigate = useNavigate()
+
+    const name = useSelector((state:RootState)=> state.tokenReducer.name)
+    const prefixImg = "https://image.tmdb.org/t/p/w500/"
+    if (isLoading) return <div>isLoading</div>
+    if (error) return <div>Error</div>
+    if (data) {
+        const movies:[{id:number, title:string, poster_path:string, overview:string}] = data.results.slice(0,10)
+        return (
+            <div>
+                <div className="row">
+                    <div className={`col-md-4 d-flex flex-column justify-content-center`}>
+                    <h2 className="mb-2">Hi {name}</h2>
+                    <h3 className={style.typeHeader}>Trending Movies</h3>
+                    <p className={`${style.desc} ps-3`}>
+                    The latest trending movie captivates audiences with its gripping storyline, stunning visuals, and stellar performances, earning rave reviews and dominating box offices worldwide. Don't miss it!
+                    </p>
+                    </div>
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="col-md-2">
+                            <img className="w-100 rounded" src={prefixImg + movie.poster_path} alt={movie.title} onClick={()=>navigate(`/single/movie/${movie.id}`)}/>
+                            <h3 className="my-2">{movie.title}</h3>
+                            <p>{`${movie.overview.slice(0,50)}...`}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>)
+    }
+}
+
+export default TrendingMovie
+```
+</details>
+<br>
+
+<details>
+<summary>TrendingTv</summary>
+
+```tsx
+import { useSelector } from "react-redux"
+import { useGetMovieQuery } from "../../store/shows"
+import { RootState } from "../../store/store"
+import style from './trendingtv.module.css'
+import { useNavigate } from "react-router-dom"
+function TrendingTV() {
+    const { data, error, isLoading } = useGetMovieQuery("trending/tv/week")
+    const navigate = useNavigate()
+
+    const name = useSelector((state:RootState)=> state.tokenReducer.name)
+    const prefixImg = "https://image.tmdb.org/t/p/w500/"
+    if (isLoading) return <div>isLoading</div>
+    if (error) return <div>Error</div>
+    if (data) {
+        const movies:[{id:number, name:string, poster_path:string, overview:string}] = data.results.slice(0,10)
+        return (
+            <div>
+                <div className="row">
+                    <div className={`col-md-4 d-flex flex-column justify-content-center`}>
+                    <h2 className="mb-2">Hi {name}</h2>
+                    <h3 className={style.typeHeader}>Trending TV</h3>
+                    <p className={`${style.desc} ps-3`}>
+                    The latest trending TV captivates audiences with its gripping storyline, stunning visuals, and stellar performances, earning rave reviews and dominating box offices worldwide. Don't miss it!
+                    </p>
+                    </div>
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="col-md-2">
+                            <img className="w-100 rounded" src={prefixImg + movie.poster_path} alt={movie.name} onClick={()=>navigate(`/single/tv/${movie.id}`)}/>
+                            <h3 className="my-2">{movie.name}</h3>
+                            <p>{`${movie.overview.slice(0,50)}...`}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>)
+    }
+}
+
+export default TrendingTV
+```
+</details>
+<br>
+<details>
+<summary>Single</summary>
+
+```tsx
+import { Navigate, useParams } from 'react-router-dom'
+import { useGetMovieQuery } from '../../store/shows'
+
+function Single() {
+    const params= useParams()
+    if (params.type === "movie" || params.type === "tv"){
+        const { data, error, isLoading } = useGetMovieQuery(`/${params.type}/${params.id}`)
+        const prefixImg = "https://image.tmdb.org/t/p/w500/"
+        if (isLoading) return <div>isLoading</div>
+        if (error) return <div>Error</div>
+        if (data) {            
+            const single:{id:number, poster_path:string, overview:string, title?:string, name?:string,vote_average:number} = data
+            return (<>
+              <div className='d-flex justify-content-between'>
+                <div className='col-md-5'>
+                <img className="w-100 rounded" src={prefixImg + single.poster_path} alt={single.title || single.name} />
+                </div>
+                <div className='col-md-5 d-flex flex-column justify-content-center'>
+                    <h1>{single.title || single.name}</h1>
+                    <p>{single.overview}</p>
+                    <p>{`Rating: ${single.vote_average}`}</p>
+                </div>
+            </div>
+            </>)
+          
+        }
+    }else{
+        <Navigate to={"/notfound"} replace />
+    }
+
+
+}
+
+export default Single
+```
+</details>
+<br>
 <div align="right">
     <b><a href="#Project-structure">↥ back to top</a></b>
 </div>
@@ -731,14 +1072,20 @@ and type for type script project
 ```ts
 import {configureStore} from '@reduxjs/toolkit'
 import tokenReducer from './tokenSlice'
+import { showsApi } from './shows'
 export const store = configureStore({
     reducer:{
         tokenReducer,
-    }
+        [showsApi.reducerPath]: showsApi.reducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(showsApi.middleware),
+    
 })
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
 
 ```
 
@@ -791,6 +1138,36 @@ export default tokenSlice.reducer
 ```
 </details>
 <br>
+<details>
+<summary>shows</summary>
+redux slice to fetch api from movie
+
+```ts
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+export const showsApi = createApi({
+    reducerPath:"showsapi",
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),
+    endpoints: (builder)=>{
+      return{
+        getMovie: builder.query({
+            query: (query) => `${query}?api_key=${import.meta.env.VITE_APIKEY}`,
+          }),
+      }
+      
+    }
+})
+
+export const { useGetMovieQuery } = showsApi
+
+
+
+```
+</details>
+<br>
+<details>
+</details>
+<br>
 <div align="right">
     <b><a href="#Project-structure">↥ back to top</a></b>
 </div>
@@ -841,7 +1218,7 @@ a{
 </div>
 <br>
 
-# # 7.public
+# # 7. public
 There svg icon for fev icon that show in web browser
 <div align="right">
     <b><a href="#Project-structure">↥ back to top</a></b>

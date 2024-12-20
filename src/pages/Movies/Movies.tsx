@@ -1,7 +1,10 @@
+import PopulerMovie from "../../components/PopulerMovie/PopulerMovie"
 
 function Movies() {
   return (
-    <div>Movies</div>
+    <section>
+      <PopulerMovie/>
+    </section>
   )
 }
 
