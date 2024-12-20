@@ -15,7 +15,9 @@ to decide what you want watch
 <br>
 
 # # 1. main
-## index.html
+
+<details>
+<summary>index.html</summary>
 Here we wite meta data like description of project and key words... <br> and also div id root that core in this react 
 and script connect with main.tsx
 
@@ -41,6 +43,9 @@ and script connect with main.tsx
 <div align="right">
     <b><a href="#Project-structure">↥ back to top</a></b>
 </div>
+</details>
+
+
 <br>
 
 # # 2. pages
