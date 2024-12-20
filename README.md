@@ -115,16 +115,22 @@ import Login from './pages/login/Login'
 import Tv from './pages/Tv/Tv'
 import Movies from './pages/Movies/Movies'
 import Notfound from './pages/Notfound/Notfound'
+import PrivateAuthsRoute from './components/PrivateRoute/PrivateAuthRoute'
+import PrivatePagesRoute from './components/PrivateRoute/PrivatePagesRoute'
 const router =createBrowserRouter([
   {
     element:<RootLayout/>,
     children:[
-      {path:"/",element:<Home/>},
-      {path:"/home",element:<Home/>},
-      {path:"/tv",element:<Tv/>},
-      {path:"/movies",element:<Movies/>},
-      {path:"/signup",element:<SignUp/>},
-      {path:"/login",element:<Login/>},
+      {element:<PrivatePagesRoute/>,children:[
+        {path:"/",element:<Home/>},
+        {path:"/home",element:<Home/>},
+        {path:"/tv",element:<Tv/>},
+        {path:"/movies",element:<Movies/>},
+      ]},
+      {element:<PrivateAuthsRoute/>,children:[
+        {path:"/signup",element:<SignUp/>},
+        {path:"/login",element:<Login/>},
+      ]},
       {path:"*",element:<Notfound/>},
 
     ]
@@ -598,7 +604,7 @@ function Nav() {
               <span className={`${style.link} px-2`} onClick={handleLogout}>Logout</span>
             </>:<>
             <Link className={`${style.link} px-2`} to={"/login"}>Login</Link>
-            <Link className={`${style.link} px-2`} to={"/register"}>Sign Up</Link>
+            <Link className={`${style.link} px-2`} to={"/signup"}>Sign Up</Link>
             </>}
 
           </div>
@@ -644,6 +650,56 @@ function Footer() {
 }
 
 export default Footer
+```
+</details>
+<br>
+<details>
+<summary>Guard Route</summary>
+there are two component one for pages like home tv movies
+<br> another one for login and register
+<br> page guard don't allow navigate to page unless you are login if not navigate to login
+
+```tsx
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { Navigate, Outlet } from "react-router-dom";
+import { getToken } from "../../store/tokenSlice";
+import { useEffect } from "react";
+
+function PrivatePagesRoute() {
+    const dispatch = useDispatch()
+    const islogin = useSelector((state:RootState)=>state.tokenReducer.islogin)
+    useEffect(()=>{
+        dispatch(getToken())
+    },[islogin,dispatch])
+
+    return islogin ? <Outlet /> : <Navigate to={"/login"} replace />;
+}
+
+export default PrivatePagesRoute
+```
+<br> auth guard if not login allow if not nvigate to home page
+
+```tsx
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { Navigate, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getToken } from "../../store/tokenSlice";
+import { useEffect } from "react";
+
+function PrivateAuthsRoute() {
+    const dispatch = useDispatch()
+    const islogin = useSelector((state:RootState)=>state.tokenReducer.islogin)
+    useEffect(()=>{
+        dispatch(getToken())
+    },[islogin,dispatch])
+    
+    return islogin == false ? <Outlet /> : <Navigate to={"/"} replace />;
+
+}
+
+export default PrivateAuthsRoute
 ```
 </details>
 <br>

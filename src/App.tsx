@@ -6,16 +6,22 @@ import Login from './pages/login/Login'
 import Tv from './pages/Tv/Tv'
 import Movies from './pages/Movies/Movies'
 import Notfound from './pages/Notfound/Notfound'
+import PrivateAuthsRoute from './components/PrivateRoute/PrivateAuthRoute'
+import PrivatePagesRoute from './components/PrivateRoute/PrivatePagesRoute'
 const router =createBrowserRouter([
   {
     element:<RootLayout/>,
     children:[
-      {path:"/",element:<Home/>},
-      {path:"/home",element:<Home/>},
-      {path:"/tv",element:<Tv/>},
-      {path:"/movies",element:<Movies/>},
-      {path:"/signup",element:<SignUp/>},
-      {path:"/login",element:<Login/>},
+      {element:<PrivatePagesRoute/>,children:[
+        {path:"/",element:<Home/>},
+        {path:"/home",element:<Home/>},
+        {path:"/tv",element:<Tv/>},
+        {path:"/movies",element:<Movies/>},
+      ]},
+      {element:<PrivateAuthsRoute/>,children:[
+        {path:"/signup",element:<SignUp/>},
+        {path:"/login",element:<Login/>},
+      ]},
       {path:"*",element:<Notfound/>},
 
     ]

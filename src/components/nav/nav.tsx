@@ -46,7 +46,7 @@ function Nav() {
               <span className={`${style.link} px-2`} onClick={handleLogout}>Logout</span>
             </>:<>
             <Link className={`${style.link} px-2`} to={"/login"}>Login</Link>
-            <Link className={`${style.link} px-2`} to={"/register"}>Sign Up</Link>
+            <Link className={`${style.link} px-2`} to={"/signup"}>Sign Up</Link>
             </>}
 
           </div>
