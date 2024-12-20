@@ -6,7 +6,7 @@ export const showsApi = createApi({
     endpoints: (builder)=>{
       return{
         getMovie: builder.query({
-            query: (query) => `${query}?api_key=${process.env.APIKEY}`,
+            query: (query) => `${query}?api_key=8fa694e68639fe9476d2540a7357fded`,
           }),
       }
       
