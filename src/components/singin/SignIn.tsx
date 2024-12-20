@@ -4,6 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup"; 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getToken } from '../../store/tokenSlice';
 
 const SignUpSchema = Yup.object().shape({ 
   email: Yup.string().email().required("This field is required"),
@@ -11,6 +13,7 @@ const SignUpSchema = Yup.object().shape({
 });
 function SignIn() {
   const [error,setError] = useState("")
+  const dispatch = useDispatch()
   const[loding,setLoading] = useState(false)
   let navigate = useNavigate()
   return (
@@ -23,6 +26,7 @@ function SignIn() {
         setLoading(true)
         axios.post(`https://backendmovie-fa3a.onrender.com/user/signin`,values).then(function (res) {
           localStorage.setItem("token",res.data.token)
+          dispatch(getToken())
           navigate("/")
           setLoading(false)
         })

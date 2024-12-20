@@ -5,11 +5,13 @@ interface Itoken {
         email:string,
         age:string,
         name:string,
+        islogin:boolean
 }
 const initialState : Itoken = {
     email: "",
     name: "",
-    age: ""
+    age: "",
+    islogin:false,
 }
 const tokenSlice = createSlice({
     name:"tokens",
@@ -22,9 +24,10 @@ const tokenSlice = createSlice({
                 state.email = decodetoken.email
                 state.age = decodetoken.age
                 state.name = decodetoken.name
-                
+                state.islogin = true
+            }else{
+                state.islogin = false
             }
-
         }
     }
 })
