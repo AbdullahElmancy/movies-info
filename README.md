@@ -232,6 +232,7 @@ and some style for page
 <summary>register</summary>
 every component contain own style sheet
 <br>
+
 1. import formik the library make easy to make form in react
 without write repeat function
 2. axios to fetch data
@@ -533,10 +534,95 @@ and the part of css
 <br>
 <details>
 <summary>nav</summary>
+
+first import
+1. Link this built in react dom for anchor
+2. FontAwesomeIcon to use it for icon
+3. this some icon we use it in nav faFacebook, faLinkedin, faGithub
+
+the nav bar have three part 
+1. pages like movies ,tv, home
+2. logo span elmancy
+3. icon and authlink
+
+```tsx
+import { Link } from 'react-router-dom'
+import style from './nav.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+
+function Nav() {
+  return (
+    <nav className='mb-3'>
+      <div className={`${style.container} d-flex align-items-center d-flex justify-content-between p-3`}>
+        <div className={style.links}>
+          <Link className={`${style.link} px-2`} to={"/home"}>Home</Link>
+          <Link className={`${style.link} px-2`} to={"/tv"}>Tv</Link>
+          <Link className={`${style.link} px-2`} to={"/movies"}>movies</Link>
+        </div>
+        <div className={style.logo}>
+          <span>ELMANCY</span>
+        </div>
+        <div className={`${style.socialAuth} d-flex `}>
+          <div className={style.social}>
+          <Link className={`style.link px-2`} to={""}>
+          <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+          </Link>
+          <Link className={`style.link px-2`} to={""}>
+          <FontAwesomeIcon className={`px-2`} icon={faLinkedin}></FontAwesomeIcon>
+          </Link>
+          <Link className={`style.link px-2`} to={""}>
+          <FontAwesomeIcon className={`px-2`} icon={faGithub}></FontAwesomeIcon>
+          </Link>
+          </div>
+          <div className={style.auth}>
+            <Link className={`${style.link} px-2`} to={"/register"}>Sign Up</Link>
+            <Link className={`${style.link} px-2`} to={"/login"}>Login</Link>
+            <span className={`${style.link} px-2`}>Logout</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+export default Nav
+```
+
+and this css module
+```css
+nav{
+    width: 100%;
+}
+
+.link{
+    font-size: 1rem;
+    cursor: pointer;
+}
+.logo{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(15, 180, 187, 1);
+}
+
+```
 </details>
 <br>
 <details>
 <summary>footer</summary>
+there only p item center contain copyright
+
+```tsx
+function Footer() {
+  return (
+    <footer className={`p-3 mt-3`}> 
+    <p className="text-center">Create by Abdallah Elmancy</p>
+    </footer>
+  )
+}
+
+export default Footer
+```
 </details>
 <br>
 <div align="right">

@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 function Footer() {
   return (
     <footer className={`p-3 mt-3`}> 
