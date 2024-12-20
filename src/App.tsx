@@ -1,20 +1,22 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import RootLayout from './rootLayout'
-import NotFound from './components/notfound/NotFound'
 import SignUp from './pages/signup/SignUp'
 import Login from './pages/login/Login'
+import Tv from './pages/Tv/Tv'
+import Movies from './pages/Movies/Movies'
+import Notfound from './pages/Notfound/Notfound'
 const router =createBrowserRouter([
   {
     element:<RootLayout/>,
     children:[
       {path:"/",element:<Home/>},
       {path:"/home",element:<Home/>},
-      {path:"/tv",element:<Home/>},
-      {path:"/movies",element:<Home/>},
+      {path:"/tv",element:<Tv/>},
+      {path:"/movies",element:<Movies/>},
       {path:"/signup",element:<SignUp/>},
       {path:"/login",element:<Login/>},
-      {path:"*",element:<NotFound/>},
+      {path:"*",element:<Notfound/>},
 
     ]
   }
